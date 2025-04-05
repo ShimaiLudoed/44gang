@@ -15,8 +15,17 @@ namespace Player
       _playerView = playerView;
       _listener = listener;
     }
-    
-    public void Bind() => _listener.OnMove += _playerView.Move;
-    public void Expose  () => _listener.OnMove -= _playerView.Move;
+
+    public void Bind()
+    {
+      _listener.OnMove += _playerView.Move;
+      _listener.OnDash += _playerView.Dash;
+    }
+
+    public void Expose()
+    {
+      _listener.OnMove -= _playerView.Move;
+      _listener.OnDash -= _playerView.Dash;
+    }
   } 
 }
