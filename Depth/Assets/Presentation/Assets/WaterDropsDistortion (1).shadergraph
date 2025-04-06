@@ -1,0 +1,55 @@
+
+{
+  "ShaderGraphImporter": {
+    "serializedVersion": 8,
+    "m_SerializedProperties": {
+      "m_GraphData": {
+        "m_ObjectId": "WaterDropsDistortion",
+        "m_Properties": [
+          {
+            "m_Name": "_NormalMap",
+            "m_ReferenceName": "_NormalMap",
+            "m_Type": "Texture2D",
+            "m_Default": "white",
+            "m_Description": "Normal Map for Distortion"
+          },
+          {
+            "m_Name": "_DistortionStrength",
+            "m_ReferenceName": "_DistortionStrength",
+            "m_Type": "Float",
+            "m_Default": 0.1,
+            "m_Description": "Strength of Distortion"
+          },
+          {
+            "m_Name": "_Tiling",
+            "m_ReferenceName": "_Tiling",
+            "m_Type": "Vector2",
+            "m_Default": [1,1],
+            "m_Description": "Tiling of Normal Map"
+          },
+          {
+            "m_Name": "_Speed",
+            "m_ReferenceName": "_Speed",
+            "m_Type": "Vector2",
+            "m_Default": [0.1,0.1],
+            "m_Description": "Scroll Speed"
+          }
+        ],
+        "m_Keywords": [],
+        "m_CustomFunctionNodes": [],
+        "m_Outputs": [
+          {
+            "m_Target": "UniversalPipeline",
+            "m_SubTarget": "Unlit",
+            "m_Output": {
+              "SurfaceType": "Transparent",
+              "Blend": "Alpha",
+              "ZWrite": false,
+              "AlphaClip": false
+            }
+          }
+        ]
+      }
+    }
+  }
+}
