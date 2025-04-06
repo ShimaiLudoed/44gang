@@ -33,13 +33,13 @@ public class SwitchWorld : MonoBehaviour
         
         SaveEnemiesData();
 
-        if (SceneManager.GetActiveScene().name == "Norm")
+        if (SceneManager.GetActiveScene().name == "level")
         {
             SceneManager.LoadScene("Curse");
         }
         else
         {
-            SceneManager.LoadScene("Norm");
+            SceneManager.LoadScene("level");
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;

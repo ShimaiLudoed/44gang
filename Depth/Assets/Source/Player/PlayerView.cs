@@ -43,7 +43,7 @@ public class PlayerView : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Norm")
+        if (SceneManager.GetActiveScene().name == "level")
         {
             _canDash = false;
         }
