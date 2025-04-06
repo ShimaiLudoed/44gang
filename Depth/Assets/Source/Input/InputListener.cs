@@ -9,7 +9,8 @@ namespace InputController
         private PlayerMove _inputActions;
         private Vector3 _currentDirection;
         public event Action<Vector3> OnMove;
-        public event Action OnDash; 
+        public event Action OnKill;
+        public event Action OnDash;
         private Vector2 _lookDelta;
 
         private void Start()
@@ -33,12 +34,16 @@ namespace InputController
         
         private void Bind()
         {
+            _inputActions.Player.Kill.performed += OnKillInputPerformed;
             _inputActions.Player.Dash.performed += OnDashInputPerformed;
             _inputActions.Player.Move.canceled += OnMoveInputCanceled;
             _inputActions.Enable();
         }
-        
 
+        private void OnKillInputPerformed(InputAction.CallbackContext context)
+        {
+            OnKill?.Invoke();
+        }
         private void OnMoveInputCanceled(InputAction.CallbackContext context)
         {
             OnMove?.Invoke(Vector3.zero);
@@ -47,7 +52,7 @@ namespace InputController
         
         private void OnDashInputPerformed(InputAction.CallbackContext context)
         {
-            OnDash?.Invoke();  // Вызываем событие OnDash, когда происходит действие рывка
+            OnDash?.Invoke();  
             Debug.Log("Dash performed");
         }
         
@@ -56,6 +61,7 @@ namespace InputController
             _inputActions.Disable();
             _inputActions.Player.Move.canceled -= OnMoveInputCanceled;
             _inputActions.Player.Dash.performed -= OnDashInputPerformed;
+            _inputActions.Player.Kill.performed -= OnKillInputPerformed;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace InputController
 {
   public interface IInputHandler
   {
+    event Action OnKill;
     event Action<Vector3> OnMove;
     event Action OnDash;
   } 

@@ -13,7 +13,7 @@ public class PlayerView : MonoBehaviour
     private Vector3 _moveDirection;
     [SerializeField] private float dashDistance = 10f;
     public bool _canDash = false;
-
+    public event Action OnKill;
 
     void Start()
     {
@@ -53,6 +53,10 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+    public void Kill()
+    {
+     OnKill?.Invoke();   
+    }
     public void Dash()
     {
         if (_canDash == true)

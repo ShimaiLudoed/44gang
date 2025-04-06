@@ -8,21 +8,21 @@ namespace Core
   {
     [SerializeField] private PlayerView playerView;
     [SerializeField] private InputListener inputListener;
-    private PlayerController _playerController;
+    private Controller _controller;
 
     private void Awake()
     {
       Debug.Log("START!");
-      _playerController = new (inputListener,playerView);
+      _controller = new (inputListener,playerView);
     }
     private void Start()
     {
       Debug.Log("BIND!");
-      _playerController.Bind();
+      _controller.Bind();
     }
     private void OnDisable()
     {
-      _playerController.Expose();
+      _controller.Expose();
     }
   }
 }
