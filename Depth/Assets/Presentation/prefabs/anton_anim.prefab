@@ -2925,6 +2925,7 @@ GameObject:
   - component: {fileID: 9022845732434007907}
   - component: {fileID: 7781780158342421418}
   - component: {fileID: 5434666085402959299}
+  - component: {fileID: 5544517093138519898}
   m_Layer: 0
   m_Name: anton_anim
   m_TagString: Player
@@ -3010,6 +3011,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c87e5551db44e4f8438eac25eec9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerManager: {fileID: 5544517093138519898}
+  respawnDelay: 1
   switchWorld: {fileID: 5434666085402959299}
   speed: 1.5
   dashDistance: 2
@@ -3024,6 +3027,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84b59ebb052a1b64f8ffc52e3043599a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5544517093138519898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300968668129151011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d459e6d9f4c571b41837968fef89ef61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8345304663271273918
