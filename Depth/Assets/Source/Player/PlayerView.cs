@@ -19,6 +19,7 @@ public class PlayerView : MonoBehaviour
     
     [SerializeField] private SwitchWorld switchWorld;
 
+    private Animator _animator;
     private Camera _camera;
     private Rigidbody _rb;
     private Vector3 _moveDirection;
@@ -64,10 +65,12 @@ public class PlayerView : MonoBehaviour
                 PlayFootstepSound();
                 _stepTimer = 0f;
             }
+            _animator.SetBool("isWalking", true);
         }
         else
         {
             _stepTimer = 0f; 
+            _animator.SetBool("isWalking", false);
         }
     }
 
