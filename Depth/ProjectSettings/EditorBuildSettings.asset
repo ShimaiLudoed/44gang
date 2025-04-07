@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Presentation/Scenes/level 1.unity
     guid: 5b98993dd2412dd4cbcc102f50326710
+  - enabled: 1
+    path: Assets/Presentation/Scenes/cutscene.unity
+    guid: 218cf6055343dbc429880513db432d0d
+  - enabled: 1
+    path: Assets/Presentation/Scenes/bar.unity
+    guid: ab9bec64ff0bf55469373f4597344783
   m_configObjects: {}
