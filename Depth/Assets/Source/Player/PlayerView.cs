@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerView : MonoBehaviour
 {
+    public PlayerManager playerManager;
+    public float respawnDelay = 1f;
     [SerializeField] private SwitchWorld switchWorld;
     [SerializeField] private float speed;
     private Rigidbody _rb;
@@ -43,7 +45,7 @@ public class PlayerView : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "level")
+        if (SceneManager.GetActiveScene().name == "level1")
         {
             _canDash = false;
         }
@@ -51,11 +53,39 @@ public class PlayerView : MonoBehaviour
         {
             _canDash = true;
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ActivateCheckpoint();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R)) 
+        {
+            Die();
+        }
+    }
+    
+    private void ActivateCheckpoint()
+    {
+        playerManager.SavePlayerPosition(transform.position);
     }
 
     public void Kill()
     {
      OnKill?.Invoke();   
+    }
+    
+    private void Die()
+    {
+        StartCoroutine(Respawn());
+    }
+
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        
+        Vector3 savedPosition = playerManager.LoadPlayerPosition();
+        transform.position = savedPosition;
+        Debug.Log("Player respawned at: " + savedPosition);
     }
     public void Dash()
     {
