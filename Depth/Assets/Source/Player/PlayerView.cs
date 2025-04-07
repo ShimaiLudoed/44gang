@@ -6,8 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerView : MonoBehaviour
 {
-    public PlayerManager playerManager;
-    public float respawnDelay = 1f;
+    [SerializeField] private AudioSource footstepAudioSource;
+    [SerializeField] private float stepRate = 0.5f;
+    [SerializeField] private AudioClip footstepSounds;
+    private float stepTimer = 0f;
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private float respawnDelay = 1f;
     [SerializeField] private SwitchWorld switchWorld;
     [SerializeField] private float speed;
     private Rigidbody _rb;
@@ -41,6 +45,26 @@ public class PlayerView : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(cameraForward); 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         _rb.velocity = _moveDirection * speed;
+        
+        if (direction.magnitude > 0f) 
+        {
+            stepTimer += Time.deltaTime;
+
+            if (stepTimer >= stepRate)
+            {
+                PlayFootstepSound();
+                stepTimer = 0f;
+            }
+        }
+        else
+        {
+            stepTimer = 0f; 
+        }
+    }
+    private void PlayFootstepSound()
+    {
+        footstepAudioSource.clip = footstepSounds;
+        footstepAudioSource.PlayOneShot(footstepAudioSource.clip);
     }
 
     private void Update()
