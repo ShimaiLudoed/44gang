@@ -9,17 +9,25 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private AudioSource footstepAudioSource;
     [SerializeField] private float stepRate = 0.5f;
     [SerializeField] private AudioClip footstepSounds;
-    private float stepTimer = 0f;
+    
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float dashDistance = 10f;
+    [SerializeField] private float dashCooldown = 1f;
+    
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private float respawnDelay = 1f;
+    
     [SerializeField] private SwitchWorld switchWorld;
-    [SerializeField] private float speed;
-    private Rigidbody _rb;
+
     private Camera _camera;
+    private Rigidbody _rb;
     private Vector3 _moveDirection;
-    [SerializeField] private float dashDistance = 10f;
-    public bool _canDash = false;
+    private float _stepTimer = 0f;
+    private float _lastDashTime = 0f;
+    private bool _canDash = false;
+
     public event Action OnKill;
+    public event Action OnSave;
     public event Action OnFinish;
 
     void Start()
@@ -43,25 +51,26 @@ public class PlayerView : MonoBehaviour
         cameraRight.y = 0;
         cameraRight.Normalize();
         _moveDirection = cameraForward * direction.z + cameraRight * direction.x;
-        Quaternion targetRotation = Quaternion.LookRotation(cameraForward); 
+        Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         _rb.velocity = _moveDirection * speed;
-        
-        if (direction.magnitude > 0f) 
-        {
-            stepTimer += Time.deltaTime;
 
-            if (stepTimer >= stepRate)
+        if (direction.magnitude > 0f)
+        {
+            _stepTimer += Time.deltaTime;
+
+            if (_stepTimer >= stepRate)
             {
                 PlayFootstepSound();
-                stepTimer = 0f;
+                _stepTimer = 0f;
             }
         }
         else
         {
-            stepTimer = 0f; 
+            _stepTimer = 0f; 
         }
     }
+
     private void PlayFootstepSound()
     {
         footstepAudioSource.clip = footstepSounds;
@@ -70,7 +79,7 @@ public class PlayerView : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "level1")
+        if (SceneManager.GetActiveScene().name == "level")
         {
             _canDash = false;
         }
@@ -78,14 +87,10 @@ public class PlayerView : MonoBehaviour
         {
             _canDash = true;
         }
-        if (Input.GetKeyDown(KeyCode.F))
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            ActivateCheckpoint();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.R)) 
-        {
-            Die();
+            OnSave?.Invoke();
         }
         if (Input.GetMouseButtonDown(0)) 
         {
@@ -95,17 +100,12 @@ public class PlayerView : MonoBehaviour
             }
         }
     }
-    
-    private void ActivateCheckpoint()
-    {
-        playerManager.SavePlayerPosition(transform.position);
-    }
 
     public void Kill()
     {
-     OnKill?.Invoke();   
+        OnKill?.Invoke();   
     }
-    
+
     private void Die()
     {
         StartCoroutine(Respawn());
@@ -119,12 +119,14 @@ public class PlayerView : MonoBehaviour
         transform.position = savedPosition;
         Debug.Log("Player respawned at: " + savedPosition);
     }
+
     public void Dash()
     {
-        if (_canDash == true)
+        if (_canDash && Time.time >= _lastDashTime + dashCooldown)
         {
             Vector3 dashDirection = transform.forward;
             transform.position += dashDirection * dashDistance;
+            _lastDashTime = Time.time;
         }
     }
 }
