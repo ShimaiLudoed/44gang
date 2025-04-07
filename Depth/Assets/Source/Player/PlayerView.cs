@@ -20,6 +20,7 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private float dashDistance = 10f;
     public bool _canDash = false;
     public event Action OnKill;
+    public event Action OnFinish;
 
     void Start()
     {
@@ -85,6 +86,13 @@ public class PlayerView : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) 
         {
             Die();
+        }
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            if (OnFinish != null)
+            {
+                OnFinish.Invoke();
+            }
         }
     }
     
