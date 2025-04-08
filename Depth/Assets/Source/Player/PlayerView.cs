@@ -149,6 +149,7 @@ public class PlayerView : MonoBehaviour
         transform.position = savedPosition;
         currentHealth = maxHealth;
         UpdateHealthSprite();
+        SceneManager.LoadScene("level");
         Debug.Log("Player respawned at: " + savedPosition);
     }
 
