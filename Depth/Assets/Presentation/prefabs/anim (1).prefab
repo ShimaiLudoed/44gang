@@ -1209,6 +1209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca577709f145804085ad1bfb44dc8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   target: {fileID: 0}
   detectionRadius: 4
   waypoints:
@@ -1233,6 +1234,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyId: 0
   CanBeDead: 0
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  player: {fileID: 0}
 --- !u!1 &1839751024762124994
 GameObject:
   m_ObjectHideFlags: 0

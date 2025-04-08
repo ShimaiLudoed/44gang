@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,13 @@ using UnityEngine.AI;
 
 public class EnemyMove : MonoBehaviour
 {
+    [SerializeField] private PlayerView player;
     [SerializeField] private Transform target; 
     [SerializeField] private float detectionRadius;  
     [SerializeField] private List<Transform> waypoints;  
     private NavMeshAgent _agent;
     private int _currentWaypointIndex = 0;  
-    [SerializeField]private bool _isPatrolling;  
+    [SerializeField]private bool _isPatrolling;
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -19,7 +21,7 @@ public class EnemyMove : MonoBehaviour
             _agent.SetDestination(waypoints[_currentWaypointIndex].position);
         }
     }
-
+    
     private void Update()
     {
         if (target != null && Vector3.Distance(transform.position, target.position) <= detectionRadius)

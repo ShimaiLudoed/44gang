@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
 {
     public int enemyId;
     [SerializeField] private bool CanBeDead;
+    [SerializeField] private LayerMask playerMask;
+    [SerializeField] private PlayerView player;
     private void Start()
     {
         EnemyData enemyData = EnemyManager.GetEnemyData(enemyId);
@@ -22,6 +24,17 @@ public class Enemy : MonoBehaviour
             {
                 transform.position = enemyData.position;
                 transform.rotation = enemyData.rotation;
+            }
+        }
+    }
+    
+    private void OnCollisionEnter(Collision other)
+    {
+        if (LayerMaskCheck.ContainsLayer(playerMask, other.gameObject.layer))
+        {
+            if (CanBeDead == false)
+            {
+                player.Die();
             }
         }
     }

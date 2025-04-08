@@ -109,7 +109,7 @@ public class PlayerView : MonoBehaviour
         OnKill?.Invoke();   
     }
 
-    private void Die()
+    public void Die()
     {
         StartCoroutine(Respawn());
     }

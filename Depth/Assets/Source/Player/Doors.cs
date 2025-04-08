@@ -34,7 +34,10 @@ public class Doors : MonoBehaviour
     {
         if (_isFinish == true)
         {
-            SceneManager.LoadScene("level");   
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            SceneManager.LoadScene("Uiscene");   
+            
         }
         else
         {

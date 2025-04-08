@@ -12,8 +12,8 @@ namespace Support.StarterAssets.ThirdPersonController.Scripts
         
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked; // Фиксация курсора
-            Cursor.visible = false; // Скрытие курсора
+            Cursor.lockState = CursorLockMode.Locked; 
+            Cursor.visible = false; 
         }
 
         private void Update()
