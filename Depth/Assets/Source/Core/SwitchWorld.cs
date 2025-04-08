@@ -8,17 +8,28 @@ public class SwitchWorld : MonoBehaviour
     public event Action OnChange;
     private Vector3 _playerPosition;
     private Quaternion _playerRotation;
+    [SerializeField] private float ChangeCooldown = 3f;
+
+    private float _lastChangeTime = 0f;
+
 
     private void Start()
     {
-        EnemyManager.ClearData(); 
+        EnemyManager.ClearData();
+        _lastChangeTime = 3f;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ChangeWorld();
+            if(Time.time >= _lastChangeTime + ChangeCooldown)
+            {
+                ChangeWorld();
+                _lastChangeTime = Time.time;
+
+            }
+            
         }
     }
 

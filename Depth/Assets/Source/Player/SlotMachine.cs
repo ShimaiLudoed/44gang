@@ -24,12 +24,10 @@ public class SlotMachine : MonoBehaviour
     {
         if (LayerMaskCheck.ContainsLayer(playerLayer, other.gameObject.layer))
         {
-            if (other.CompareTag("Player"))
-            {
                 text.text = " ";
                 text.gameObject.SetActive(false);
                 player.OnSave -= ActivateCheckpoint; 
-            }
+                Debug.Log("jopa44");
         }
     }
     private void ActivateCheckpoint()

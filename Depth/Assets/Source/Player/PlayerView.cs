@@ -3,9 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+
 
 public class PlayerView : MonoBehaviour
 {
+    [SerializeField] private Image healthImage;
+    [SerializeField] private Sprite[] healthSprites;
+    [SerializeField] private int maxHealth = 100; // Максимальное здоровье
+    public int currentHealth; // Текущее здоровье
+
+    [SerializeField] private float healthRecoveryRate = 1f; // Здоровье за секунду (в обычном мире)
+    [SerializeField] private float healthLossRate = 1f; // Потеря здоровья за секунду (в другом мире)
+
+    private Coroutine healthCoroutine; // Ссылка на корутину
+    public bool isInNormalWorld; // Флаг для проверки, в каком мире игрок
     [SerializeField] private AudioSource footstepAudioSource;
     [SerializeField] private float stepRate = 0.5f;
     [SerializeField] private AudioClip footstepSounds;
@@ -33,10 +46,17 @@ public class PlayerView : MonoBehaviour
 
     void Start()
     {
+        
         switchWorld.OnChange += ChangeDash;
         _camera = Camera.main;
         _rb = GetComponent<Rigidbody>();
+        currentHealth = maxHealth; // Устанавливаем текущее здоровье на максимум
+        ChangeWorld();
+        
     }
+
+    
+
 
     private void ChangeDash()
     {
@@ -80,8 +100,61 @@ public class PlayerView : MonoBehaviour
         footstepAudioSource.PlayOneShot(footstepAudioSource.clip);
     }
 
+
+    public void ChangeWorld()
+        {
+
+            // Запускаем или останавливаем корутину в зависимости от мира
+            if (isInNormalWorld)
+            {
+                StartHealthRecovery();
+            }
+            else
+            {
+                StartHealthLoss();
+            }
+        }
+
+    private void StartHealthRecovery()
+        {
+            if (healthCoroutine != null) StopCoroutine(healthCoroutine);
+            healthCoroutine = StartCoroutine(RecoverHealth());
+        }
+    private void StartHealthLoss()
+        {
+            if (healthCoroutine != null) StopCoroutine(healthCoroutine);
+            healthCoroutine = StartCoroutine(LoseHealth());
+        }
+    private IEnumerator LoseHealth()
+        {
+            while (currentHealth > 0)
+            {
+                currentHealth -= Mathf.FloorToInt(healthLossRate);
+                currentHealth = Mathf.Max(currentHealth, 0); // Убедитесь, что здоровье не менее 0
+                yield return new WaitForSeconds(2f); // Подождите 1 секунду перед потерей
+                UpdateHealthSprite(); // Обновите спрайт здоровья
+            }
+
+            // Здесь можно вызывать метод умирания игрока
+            Die(); 
+        }
+
+    private IEnumerator RecoverHealth()
+        {
+            while (currentHealth < maxHealth)
+            {
+                currentHealth += Mathf.FloorToInt(healthRecoveryRate);
+                currentHealth = Mathf.Min(currentHealth, maxHealth); // Ограничиваем здоровье максимум
+                yield return new WaitForSeconds(1f); // Подождите 1 секунду перед восстановлением
+                UpdateHealthSprite(); // Обновите спрайт здоровья
+            }
+        }
+
+
+
     private void Update()
     {
+
         if (SceneManager.GetActiveScene().name == "level")
         {
             _canDash = false;
@@ -140,4 +213,18 @@ public class PlayerView : MonoBehaviour
             _lastDashTime = Time.time;
         }
     }
+
+
+    private void UpdateHealthSprite()
+    {
+        float healthPercentage = (float)currentHealth / maxHealth; // Изменяем процент здоровья
+
+        // Определяем индекс спрайта исходя из процента здоровья
+        int spriteIndex = Mathf.FloorToInt(healthPercentage * (healthSprites.Length - 1));
+        spriteIndex = Mathf.Clamp(spriteIndex, 0, healthSprites.Length - 1);
+        healthImage.sprite = healthSprites[spriteIndex];
+
+    }
+
+
 }

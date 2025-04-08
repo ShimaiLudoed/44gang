@@ -3012,15 +3012,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c87e5551db44e4f8438eac25eec9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthImage: {fileID: 0}
+  healthSprites: []
+  maxHealth: 100
+  currentHealth: 0
+  healthRecoveryRate: 1
+  healthLossRate: 1
   footstepAudioSource: {fileID: 0}
   stepRate: 0.5
   footstepSounds: {fileID: 0}
+  speed: 1.5
+  dashDistance: 2
+  dashCooldown: 1
   playerManager: {fileID: 5544517093138519898}
   respawnDelay: 1
   switchWorld: {fileID: 5434666085402959299}
-  speed: 1.5
-  dashDistance: 2
-  _canDash: 0
 --- !u!114 &5434666085402959299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3033,6 +3039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b59ebb052a1b64f8ffc52e3043599a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerView: {fileID: 7781780158342421418}
+  currentHealth: 0
 --- !u!114 &5544517093138519898
 MonoBehaviour:
   m_ObjectHideFlags: 0
