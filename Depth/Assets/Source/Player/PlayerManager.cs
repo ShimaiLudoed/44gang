@@ -18,9 +18,9 @@ public class PlayerManager : MonoBehaviour
     
     public Vector3 LoadPlayerPosition()
     {
-        float x = PlayerPrefs.GetFloat(_player_Position_Key_X, 0f); 
+        float x = PlayerPrefs.GetFloat(_player_Position_Key_X, -6.9f); 
         float y = PlayerPrefs.GetFloat(_player_Position_Key_Y, 1f);
-        float z = PlayerPrefs.GetFloat(_player_Position_Key_Z, 0f); 
+        float z = PlayerPrefs.GetFloat(_player_Position_Key_Z, -23f); 
         return new Vector3(x, y, z);
     }
     
