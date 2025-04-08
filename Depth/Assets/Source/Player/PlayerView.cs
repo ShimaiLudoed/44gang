@@ -127,8 +127,16 @@ public class PlayerView : MonoBehaviour
     {
         if (_canDash && Time.time >= _lastDashTime + dashCooldown)
         {
-            Vector3 dashDirection = transform.forward;
-            transform.position += dashDirection * dashDistance;
+            Vector3 dashDirection = transform.forward.normalized; 
+            Vector3 dashTargetPosition = transform.position + dashDirection * dashDistance; 
+            
+            if (Physics.Raycast(transform.position, dashDirection, dashDistance))
+            {
+                Debug.Log("Dash blocked by a wall or obstacle.");
+                return;
+            }
+
+            _rb.MovePosition(dashTargetPosition);
             _lastDashTime = Time.time;
         }
     }

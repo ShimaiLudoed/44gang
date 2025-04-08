@@ -36,7 +36,7 @@ public class Doors : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-            SceneManager.LoadScene("Uiscene");   
+            SceneManager.LoadScene("MainMenu");   
             
         }
         else
