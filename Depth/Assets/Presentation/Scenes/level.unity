@@ -43334,6 +43334,10 @@ PrefabInstance:
       propertyPath: m_SelectedVertices.Array.data[3]
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 6653946278244140874, guid: 50b55be70b6c1774597d7a34046e5610, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.591
+      objectReference: {fileID: 0}
     - target: {fileID: 7165836892082754424, guid: 50b55be70b6c1774597d7a34046e5610, type: 3}
       propertyPath: m_Mesh
       value: 
