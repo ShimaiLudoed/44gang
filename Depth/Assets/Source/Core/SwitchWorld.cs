@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,28 +7,24 @@ public class SwitchWorld : MonoBehaviour
     public event Action OnChange;
     private Vector3 _playerPosition;
     private Quaternion _playerRotation;
+
     [SerializeField] private float ChangeCooldown = 3f;
-
     private float _lastChangeTime = 0f;
-
-
+    
     private void Start()
-    {
+    { 
         EnemyManager.ClearData();
-        _lastChangeTime = 3f;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if(Time.time >= _lastChangeTime + ChangeCooldown)
+            if (Time.time >= _lastChangeTime + ChangeCooldown)
             {
                 ChangeWorld();
-                _lastChangeTime = Time.time;
-
+                _lastChangeTime = Time.time; 
             }
-            
         }
     }
 
@@ -41,7 +36,7 @@ public class SwitchWorld : MonoBehaviour
             _playerPosition = player.transform.position;
             _playerRotation = player.transform.rotation;
         }
-        
+
         SaveEnemiesData();
 
         if (SceneManager.GetActiveScene().name == "level")
@@ -58,7 +53,7 @@ public class SwitchWorld : MonoBehaviour
 
     private void SaveEnemiesData()
     {
-        EnemyManager.ClearData(); 
+        EnemyManager.ClearData();
         foreach (var enemy in GameObject.FindObjectsOfType<Enemy>())
         {
             EnemyManager.SetEnemyData(enemy.enemyId, enemy.transform.position, enemy.transform.rotation, false);
@@ -73,7 +68,6 @@ public class SwitchWorld : MonoBehaviour
             player.transform.position = _playerPosition;
             player.transform.rotation = _playerRotation;
         }
-
 
         RestoreEnemiesData();
 
@@ -92,7 +86,7 @@ public class SwitchWorld : MonoBehaviour
             }
             else
             {
-                Destroy(enemy.gameObject); 
+                Destroy(enemy.gameObject);
             }
         }
     }
