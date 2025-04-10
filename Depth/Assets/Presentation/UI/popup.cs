@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using static LeanTween;
+
 public class PopupController : MonoBehaviour
 {
     public GameObject popupPanel;
@@ -12,7 +12,12 @@ public class PopupController : MonoBehaviour
 
     void Start()
     {
+        // Временно активируем, чтобы задать scale, потом обратно выключаем
+        bool wasActive = popupPanel.activeSelf;
+        popupPanel.SetActive(true);
         popupPanel.transform.localScale = hiddenScale;
+        popupPanel.SetActive(wasActive);
+
         openButton.onClick.AddListener(OpenPopup);
     }
 
